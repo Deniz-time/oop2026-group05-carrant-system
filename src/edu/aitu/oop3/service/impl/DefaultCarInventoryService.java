@@ -21,7 +21,7 @@ public class DefaultCarInventoryService implements CarInventoryService {
     @Override
     public List<Car> searchAvailableCars(LocalDate from, LocalDate to) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            return carRepository.findAvailable(conn, from, to);
+            return carRepository.findAvailableForDates(conn, from, to);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

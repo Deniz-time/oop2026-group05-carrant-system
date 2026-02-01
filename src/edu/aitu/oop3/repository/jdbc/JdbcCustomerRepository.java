@@ -22,6 +22,19 @@ public class JdbcCustomerRepository implements CustomerRepository {
     }
 
     @Override
+    public java.util.List<Customer> findAll(Connection conn) throws SQLException {
+        String sql = "SELECT id, full_name, age, driver_license_number FROM customers ORDER BY id";
+        java.util.List<Customer> list = new java.util.ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                list.add(map(rs));
+            }
+        }
+        return list;
+    }
+
+    @Override
     public long create(Connection conn, Customer customer) throws SQLException {
         String sql = "INSERT INTO customers(full_name, age, driver_license_number) VALUES (?,?,?) RETURNING id";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

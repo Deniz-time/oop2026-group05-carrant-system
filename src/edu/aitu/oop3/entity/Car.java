@@ -6,15 +6,19 @@ public class Car {
     private String model;
     private int dailyPrice;
     private boolean available;
+    private CarType type;
 
-    public Car() {}
-
-    public Car(Long id, String brand, String model, int dailyPrice, boolean available) {
+    public Car(Long id, String brand, String model, int dailyPrice, boolean available, CarType type) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.dailyPrice = dailyPrice;
         this.available = available;
+        this.type = (type == null ? CarType.ECONOMY : type);
+    }
+
+    public Car(Long id, String brand, String model, int dailyPrice, boolean available) {
+        this(id, brand, model, dailyPrice, available, CarType.ECONOMY);
     }
 
     public Long getId() { return id; }
@@ -31,4 +35,7 @@ public class Car {
 
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
+
+    public CarType getType() { return type; }
+    public void setType(CarType type) { this.type = (type == null ? CarType.ECONOMY : type); }
 }
